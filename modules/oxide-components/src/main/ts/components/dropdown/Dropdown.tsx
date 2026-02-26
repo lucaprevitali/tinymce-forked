@@ -103,8 +103,27 @@ const Content = forwardRef<HTMLDivElement, DropdownContentProps>(({ children, on
     };
   }, [ updatePosition, triggerRef, contentRef ]);
 
+  const onHoverTriggerProps = {
+    onMouseLeave: debouncedHideHoverablePopover.throttle,
+    onMouseEnter: () => debouncedHideHoverablePopover.cancel()
+  };
+
+  const onArrowTriggerProps = {
+    onKeyUp: (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        e.stopPropagation();
+        contentRef.current?.hidePopover();
+      }
+    }
+  };
+
+  const contentProps = {
+    ...triggerEvents.includes('hover') && onHoverTriggerProps,
+    ...triggerEvents.includes('arrows') && onArrowTriggerProps,
+    ...props
+  };
   return <div
-    // @ts-expect-error - TODO: Remove this expect error once we've upgraded to React 19+
+    // @ts-expect-error - TODO: ÷Remove this expect error once we've upgraded to React 19+
     popover='auto'
     className={Bem.block('tox-dropdown-content')}
     ref={(el: HTMLDivElement) => {
@@ -116,11 +135,7 @@ const Content = forwardRef<HTMLDivElement, DropdownContentProps>(({ children, on
       }
     }}
     style={{ ...positioningStyles }}
-    { ...(triggerEvents.includes('hover')) && {
-      onMouseLeave: debouncedHideHoverablePopover.throttle,
-      onMouseEnter: () => debouncedHideHoverablePopover.cancel()
-    }}
-    { ...props }
+    { ...contentProps }
   >
     {isOpen && children}
   </div>;
@@ -158,6 +173,14 @@ const Trigger: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const onArrowTriggerProps = {
+    onKeyUp: (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        contentRef.current?.showPopover();
+      }
+    }
+  };
+
   return cloneElement(child, {
     ref: (el: HTMLElement) => {
       triggerRef.current = el;
@@ -169,6 +192,7 @@ const Trigger: FC<PropsWithChildren> = ({ children }) => {
     },
     ...triggerEvents.includes('click') && onClickTriggerProps,
     ...triggerEvents.includes('hover') && onHoverTriggerProps,
+    ...triggerEvents.includes('arrows') && onArrowTriggerProps
   });
 };
 
@@ -177,7 +201,7 @@ export interface DropdownProps extends PropsWithChildren {
   readonly align?: 'start' | 'center' | 'end';
   // margin/gap between the trigger button and anchored container
   readonly gap?: number;
-  readonly triggerEvents?: Array<'click' | 'hover'>;
+  readonly triggerEvents?: Array<'click' | 'hover' | 'arrows'>;
 }
 
 const Root: FC<DropdownProps> = ({ children, side = 'top', align = 'start', gap = 8, triggerEvents = [ 'click' ] }) => {
