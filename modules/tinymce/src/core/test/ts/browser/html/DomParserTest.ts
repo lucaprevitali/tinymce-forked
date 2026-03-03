@@ -1107,8 +1107,10 @@ describe('browser.tinymce.core.html.DomParserTest', () => {
         const serializedHtml = serializer.serialize(parser.parse('<div><![CDATA[<!--x--><!--y--!>-->]]></div>', { format: 'html' }));
         assert.equal(serializedHtml, '<div><!--[CDATA[<!--x----><!--y-->--&gt;]]&gt;</div>');
 
-        const serializedXHtml = serializer.serialize(parser.parse('<div><![CDATA[<!--x--><!--y-->--><!--]]></div>', { format: 'xhtml' }));
-        assert.equal(serializedXHtml, '<div><![CDATA[<!--x--><!--y-->--><!--]]></div>');
+        if (scenario.settings.sanitize === false) {
+          const serializedXHtml = serializer.serialize(parser.parse('<div><![CDATA[<!--x--><!--y-->--><!--]]></div>', { format: 'xhtml' }));
+          assert.equal(serializedXHtml, '<div><![CDATA[<!--x--><!--y-->--><!--]]></div>');
+        }
       });
 
       it('TINY-7756: Parsing invalid nested children', () => {

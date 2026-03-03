@@ -264,12 +264,12 @@ const register = (editor: Editor): void => {
 
   registerOption('branding', {
     processor: 'boolean',
-    default: true
+    default: false
   });
 
   registerOption('promotion', {
     processor: 'boolean',
-    default: true
+    default: false
   });
 
   registerOption('resize', {

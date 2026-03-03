@@ -71,7 +71,8 @@ const ControlSelection = (selection: EditorSelection, editor: Editor): ControlSe
   const rootDocument = document;
   const rootElement = editor.getBody();
   let selectedElm: HTMLElement, selectedElmGhost: HTMLElement, resizeHelper: HTMLElement, selectedHandle: SelectedResizeHandle, resizeBackdrop: HTMLElement;
-  let startX: number, startY: number, selectedElmX: number, selectedElmY: number, startW: number, startH: number, ratio: number, resizeStarted: boolean;
+  let startX: number, startY: number, startW: number, startH: number, ratio: number, resizeStarted: boolean;
+  const selectedElmX = 0, selectedElmY = 0;
   let width: number;
   let height: number;
   let startScrollWidth: number;

@@ -14,7 +14,14 @@ let create = (entries, tsConfig, outDir = '.') => {
   return {
     entry: resolvedEntries,
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'eval-cheap-module-source-map',
+    cache: {
+      type: 'filesystem',
+      buildDependencies: {
+        // Invalidate cache when tsconfig or this file changes
+        config: [ tsConfigPath, __filename ]
+      }
+    },
     target: 'web',
     optimization: {
       removeAvailableModules: false,

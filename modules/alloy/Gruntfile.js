@@ -60,7 +60,7 @@ const create = (inFile, outFile) => {
       ]
     },
     plugins: [
-      new ForkTsCheckerWebpackPlugin({ async: true })
+      new ForkTsCheckerWebpackPlugin()
     ],
     output: {
       filename: path.basename(outFile),
@@ -130,7 +130,7 @@ module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt, {
     requireResolution: true,
     config: "../../package.json",
-    pattern: ['grunt-*', '@ephox/bedrock', '@ephox/swag']
+    pattern: ['grunt-*', '@ephox/bedrock-server', '@ephox/swag']
   });
 
   grunt.registerTask('dev', ['webpack-dev-server']);

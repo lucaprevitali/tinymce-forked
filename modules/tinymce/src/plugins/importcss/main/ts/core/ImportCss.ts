@@ -96,7 +96,9 @@ const getSelectors = (editor: Editor, doc: Document, fileFilter: Filter | undefi
 
     Tools.each(rules, (cssRule) => {
       if (isCssImportRule(cssRule)) {
-        append(cssRule.styleSheet, true);
+        if (cssRule.styleSheet) {
+          append(cssRule.styleSheet, true);
+        }
       } else if (isCssPageRule(cssRule)) {
         Tools.each(cssRule.selectorText.split(','), (selector) => {
           selectors.push(Tools.trim(selector));

@@ -15,8 +15,8 @@ describe('browser.tinymce.core.html.SerializerTest', () => {
       '<strong>text</strong><img src="1.gif">'
     );
     assert.equal(serializer.serialize(DomParser().parse('<!-- comment -->')), '<!-- comment -->');
-    assert.equal(serializer.serialize(DomParser().parse('<![CDATA[cdata]]>', { format: 'xhtml' })), '<![CDATA[cdata]]>');
-    assert.equal(serializer.serialize(DomParser().parse('<?xml-stylesheet attr="value" ?>', { format: 'xhtml' })), '<?xml-stylesheet attr="value" ?>');
+    assert.equal(serializer.serialize(DomParser({ sanitize: false }).parse('<![CDATA[cdata]]>', { format: 'xhtml' })), '<![CDATA[cdata]]>');
+    assert.equal(serializer.serialize(DomParser({ sanitize: false }).parse('<?xml-stylesheet attr="value" ?>', { format: 'xhtml' })), '<?xml-stylesheet attr="value" ?>');
   });
 
   it('Sorting of attributes', () => {

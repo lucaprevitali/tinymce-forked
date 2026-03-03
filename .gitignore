@@ -6,11 +6,13 @@ node_modules
 
 package-lock.json
 yarn-error.log*
+.yarnrc.bak
 lerna-debug.log
 scratch
 lib
 tsconfig.tsbuildinfo
 modules/*/LICENSE.TXT
+test_output.log
 
 /dist
 /js

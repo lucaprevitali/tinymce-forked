@@ -50,7 +50,7 @@ module.exports = {
   },
 
   plugins: [
-    new ForkTsCheckerWebpackPlugin({ async: true })
+    new ForkTsCheckerWebpackPlugin()
   ],
 
   output: {
